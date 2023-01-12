@@ -90,3 +90,14 @@ ul {
     transform: rotateZ(180deg);
   }
 }
+.hidden-icon {
+  display: none;
+}
+.link-pag--hidden {
+  stroke: gray;
+  pointer-events: none;
+}
+.current {
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+}
