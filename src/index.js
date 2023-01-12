@@ -7,6 +7,7 @@ const dataBox = document.querySelector('.js-fetch-box');
 fetchCountries().then(data => {
   console.log(data);
   const allPages = Math.ceil(data.totalHits / data.hits.length);
+
   console.log(allPages);
   createMurkUp(data.hits, dataBox);
 
