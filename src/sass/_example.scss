@@ -9,6 +9,7 @@ body {
   font-size: 18px;
   line-height: 0.82;
   letter-spacing: 0.02em;
+  color: #212121;
 }
 
 img {
@@ -38,7 +39,7 @@ ul {
   width: 40px;
   height: 40px;
 
-  color: #212121;
+  color: inherit;
   stroke: currentColor;
   fill: white;
 
@@ -98,6 +99,7 @@ ul {
   pointer-events: none;
 }
 .current {
+  // border-radius: 5px;
   border: 1px solid var(--accent-color);
   color: var(--accent-color);
 }

@@ -3,6 +3,9 @@ import createMurkUp from './create-murk-up';
 
 const listRef = document.querySelector('.js-pagination-box');
 const dataBox = document.querySelector('.js-fetch-box');
+let globalCurrentPage = 0;
+let childIndex = 0;
+
 /**
  * Create pagination
  * @param {Number} currentPage
@@ -15,10 +18,11 @@ export default function pagination(currentPage, allPages) {
   let beforeOnePage = currentPage - 1;
   let afterTwoPage = currentPage + 2;
   let afterOnePage = currentPage + 1;
+  globalCurrentPage = currentPage;
 
   if (currentPage > 1) {
     murkUp +=
-      '<li class="item-pag"><a class="link-pag link-pag--btn " href=""><svg class="pag-icon pag-icon--reverse" width="30" height="30"><use href="/symbol-defs.a8b2e413.svg#icon-btn-arrow"></use></svg></a></li>';
+      '<li class="item-pag"><a class="link-pag link-pag--btn btn-left" href=""><svg class="pag-icon pag-icon--reverse" width="30" height="30"><use href="/symbol-defs.a8b2e413.svg#icon-btn-arrow"></use></svg></a></li>';
   } else if (currentPage === 1) {
     murkUp +=
       '<li class="item-pag"><a class="link-pag link-pag--btn link-pag--hidden" href=""><svg class="pag-icon pag-icon--reverse" width="30" height="30"><use href="/symbol-defs.a8b2e413.svg#icon-btn-arrow"></use></svg></a></li>';
@@ -59,14 +63,24 @@ export default function pagination(currentPage, allPages) {
 
   if (allPages > currentPage) {
     murkUp +=
-      '<li class="item-pag"><a class="link-pag link-pag--btn " href=""><svg class="pag-icon" width="30" height="30"><use href="/symbol-defs.a8b2e413.svg#icon-btn-arrow"></use></svg></a></li>';
+      '<li class="item-pag"><a class="link-pag link-pag--btn btn-right" href=""><svg class="pag-icon" width="30" height="30"><use href="/symbol-defs.a8b2e413.svg#icon-btn-arrow"></use></svg></a></li>';
   } else if (allPages === currentPage) {
     murkUp +=
       '<li class="item-pag"><a class="link-pag link-pag--btn link-pag--hidden" href=""><svg class="pag-icon" width="30" height="30"><use href="/symbol-defs.a8b2e413.svg#icon-btn-arrow"></use></svg></a></li>';
   }
 
   listRef.innerHTML = murkUp;
-  const firstRef = document.getElementById('first');
+
+  if (currentPage === allPages) {
+    childIndex = 5;
+  } else if (currentPage <= 5) {
+    childIndex = 0;
+    childIndex += currentPage;
+  }
+
+  console.log(childIndex);
+  const firstRef = listRef.children[childIndex].firstElementChild;
+  console.log(firstRef);
   firstRef.classList.add('current');
 }
 
@@ -74,22 +88,45 @@ listRef.addEventListener('click', renderPaginationMurkUp);
 
 function renderPaginationMurkUp(evt) {
   evt.preventDefault();
+
+  if (evt.target.closest('.btn-right')) {
+    if (evt.target.closest('.btn-right').classList.contains('btn-right')) {
+      globalCurrentPage += 1;
+      fetchCountries(globalCurrentPage).then(data => {
+        const allPages = Math.ceil(data.totalHits / data.hits.length);
+
+        createMurkUp(data.hits, dataBox);
+        pagination(globalCurrentPage, allPages);
+      });
+      return;
+    }
+  }
+  if (evt.target.closest('.btn-left')) {
+    if (evt.target.closest('.btn-left').classList.contains('btn-left')) {
+      globalCurrentPage -= 1;
+      fetchCountries(globalCurrentPage).then(data => {
+        const allPages = Math.ceil(data.totalHits / data.hits.length);
+
+        createMurkUp(data.hits, dataBox);
+        pagination(globalCurrentPage, allPages);
+      });
+      return;
+    }
+  }
+
   if (evt.target.nodeName !== 'A') {
     return;
   }
   if (evt.target.textContent === '...') {
     return;
   }
-  // if (evt.target)
+
   const page = Number(evt.target.textContent);
+
   fetchCountries(page).then(data => {
     const allPages = Math.ceil(data.totalHits / data.hits.length);
     console.log(allPages);
     createMurkUp(data.hits, dataBox);
     pagination(page, allPages);
-    if (evt.target.textContent === page.toString()) {
-      evt.target.classList.add('current');
-      console.log(evt.target);
-    }
   });
 }
