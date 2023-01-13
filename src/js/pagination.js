@@ -78,9 +78,7 @@ export default function pagination(currentPage, allPages) {
     childIndex += currentPage;
   }
 
-  console.log(childIndex);
   const firstRef = listRef.children[childIndex].firstElementChild;
-  console.log(firstRef);
   firstRef.classList.add('current');
 }
 
@@ -125,7 +123,6 @@ function renderPaginationMurkUp(evt) {
 
   fetchCountries(page).then(data => {
     const allPages = Math.ceil(data.totalHits / data.hits.length);
-    console.log(allPages);
     createMurkUp(data.hits, dataBox);
     pagination(page, allPages);
   });
