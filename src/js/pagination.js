@@ -71,6 +71,10 @@ export default function pagination(currentPage, allPages) {
 
   listRef.innerHTML = murkUp;
 
+  createAccentCurrentPage(currentPage);
+}
+
+function createAccentCurrentPage(val) {
   if (currentPage === allPages) {
     childIndex = 5;
   } else if (currentPage <= 5) {
