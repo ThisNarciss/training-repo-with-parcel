@@ -1,7 +1,7 @@
-import fetchCountries from './js/fetch-countries-api';
-import pagination from './js/pagination';
-import createMurkUp from './js/create-murk-up';
-import createModalMurkUp from './js/create-modal-murk-up';
+import fetchCountries from '../src/js/fetch-countries-api';
+import pagination from '../src/js/pagination';
+import createMurkUp from '../src/js/create-murk-up';
+import createModalMurkUp from '../src/js/create-modal-murk-up';
 
 const backdrop = document.querySelector('.backdrop');
 
