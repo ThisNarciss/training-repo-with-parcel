@@ -1,6 +1,6 @@
 import fetchCountries from '../../src/js/fetch-countries-api';
 import createMurkUp from '../../src/js/create-murk-up';
-import countsAllPages from '../../src/js/countsAllPages';
+import countsAllPages from '../../src/js/counts-all-Pages';
 
 const listRef = document.querySelector('.js-pagination-box');
 
