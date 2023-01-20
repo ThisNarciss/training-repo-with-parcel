@@ -1,7 +1,7 @@
 import fetchCountries from './js/fetch-countries-api';
 import pagination from './js/pagination';
 import createMurkUp from './js/create-murk-up';
-import countsAllPages from './js/counts-all-pages';
+import countsAllPages from './js/counts-all-Pages';
 // import createModalMurkUp from './js/create-modal-murk-up';
 
 // const backdrop = document.querySelector('.backdrop');
