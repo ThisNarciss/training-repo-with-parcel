@@ -1,6 +1,6 @@
 import fetchCountries from './fetch-countries-api';
 import createMurkUp from './create-murk-up';
-// import countsAllPages from './counts-all-pages';
+import countsAllPages from './counts-all-pages';
 
 const listRef = document.querySelector('.js-pagination-box');
 
@@ -92,18 +92,22 @@ function renderPaginationMurkUp(evt) {
   if (Boolean(evt.target.closest('.btn-right'))) {
     globalCurrentPage += 1;
     fetchCountries(globalCurrentPage).then(data => {
-      const allPages = Math.ceil(data.totalHits / data.hits.length);
       createMurkUp(data.hits);
-      pagination(globalCurrentPage, allPages);
+      pagination(
+        globalCurrentPage,
+        countsAllPages(data.totalHits, data.hits.length)
+      );
     });
     return;
   }
   if (Boolean(evt.target.closest('.btn-left'))) {
     globalCurrentPage -= 1;
     fetchCountries(globalCurrentPage).then(data => {
-      const allPages = Math.ceil(data.totalHits / data.hits.length);
       createMurkUp(data.hits);
-      pagination(globalCurrentPage, allPages);
+      pagination(
+        globalCurrentPage,
+        countsAllPages(data.totalHits, data.hits.length)
+      );
     });
     return;
   }
@@ -118,8 +122,7 @@ function renderPaginationMurkUp(evt) {
   const page = Number(evt.target.textContent);
 
   fetchCountries(page).then(data => {
-    const allPages = Math.ceil(data.totalHits / data.hits.length);
     createMurkUp(data.hits);
-    pagination(page, allPages);
+    pagination(page, countsAllPages(data.totalHits, data.hits.length));
   });
 }

@@ -1,14 +1,15 @@
 import fetchCountries from './js/fetch-countries-api';
 import pagination from './js/pagination';
 import createMurkUp from './js/create-murk-up';
+import countsAllPages from './js/counts-all-pages';
 // import createModalMurkUp from './js/create-modal-murk-up';
 
 // const backdrop = document.querySelector('.backdrop');
 
 fetchCountries().then(data => {
-  const allPages = Math.ceil(data.totalHits / data.hits.length);
+  // const allPages = Math.ceil(data.totalHits / data.hits.length);
   createMurkUp(data.hits);
-  pagination(1, allPages);
+  pagination(1, countsAllPages(data.totalHits, data.hits.length));
   // const link = document.querySelectorAll('.large-image');
 
   // for (let i = 0; i < link.length; i += 1) {
